@@ -18,6 +18,7 @@ public class JSONFileUtil {
 
     /**
      * 读取json文件
+     *
      * @param path
      * @return
      */
@@ -27,7 +28,7 @@ public class JSONFileUtil {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             String line;
             StringBuilder stringBuilder = new StringBuilder();
-            while ((line = bufferedReader.readLine()) != null){
+            while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
             }
             JSONArray jsonArray = JSONArray.parseArray(JSONObject.parseObject(String.valueOf(stringBuilder)).getString(key));
@@ -44,18 +45,23 @@ public class JSONFileUtil {
 
     public static <T> List<T> parseJson(String path, String listKey, Class<T> clazz, String key) {
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(path))));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
             String line;
             StringBuilder stringBuilder = new StringBuilder();
-            while ((line = bufferedReader.readLine()) != null){
+            while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
             }
             JSONArray jsonArray = JSONArray.parseArray(JSONObject.parseObject(String.valueOf(stringBuilder)).getString(listKey));
-            List<T> result = new ArrayList<>();
+            List result = new ArrayList<>();
             for (int i = 0; i < jsonArray.size(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                T t = (T) jsonObject.getString(key);
-                result.add(t);
+                if (clazz == Long.class) {
+                    result.add(jsonObject.getLong(key));
+                } else if (clazz == Integer.class) {
+                    result.add(jsonObject.getInteger(key));
+                } else {
+                    result.add(jsonObject.getString(key));
+                }
             }
             return result;
         } catch (Exception e) {
