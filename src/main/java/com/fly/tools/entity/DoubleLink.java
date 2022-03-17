@@ -10,8 +10,11 @@ public class DoubleLink<T> {
 
     private Node<T> tail;
 
+    private int size = 0;
+
     /**
      * 获取第一个节点
+     *
      * @return
      */
     public Node<T> getHead() {
@@ -20,6 +23,7 @@ public class DoubleLink<T> {
 
     /**
      * 获取末尾节点
+     *
      * @return
      */
     public Node<T> getTail() {
@@ -27,24 +31,36 @@ public class DoubleLink<T> {
     }
 
     /**
+     * 获取链表长度
+     *
+     * @return
+     */
+    public int getSize() {
+        return this.size;
+    }
+
+    /**
      * 添加节点在尾部
+     *
      * @param t
      */
     public void append(T t) {
+        Node<T> node;
         if (tail == null) {
-            Node<T> node = new Node(null, null, t);
+            node = new Node<>(null, null, t);
             head = node;
-            tail = node;
         } else {
-            Node<T> node = new Node<>(tail, null, t);
+            node = new Node<>(tail, null, t);
             tail.setNext(node);
-            tail = node;
         }
+        tail = node;
+        this.size++;
     }
 
     /**
      * 交换两个节点位置
-     * @param pre 前节点
+     *
+     * @param pre  前节点
      * @param next 后节点
      */
     public void exchange(Node<T> pre, Node<T> next) {
