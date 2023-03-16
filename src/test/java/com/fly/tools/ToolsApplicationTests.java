@@ -10,7 +10,7 @@ import java.util.List;
 
 @SpringBootTest
 class ToolsApplicationTests {
-    private static String basePath = "D:\\GitRepository\\json\\";
+    private static String basePath = "D:\\";
 
     public static void main(String[] args) {
         parseJson();
@@ -23,7 +23,7 @@ class ToolsApplicationTests {
 
     @Test
     public static void parseJson() {
-        List<Long> list = JSONFileUtil.parseJson(basePath.concat("s1.json"), "dataList", Long.class, "id");
+        List<Long> list = JSONFileUtil.parseJson(basePath.concat("log.json"), "dataList", Long.class, "id");
         System.out.println(list);
     }
 
